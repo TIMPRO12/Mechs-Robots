@@ -10,7 +10,7 @@
   {% include "components/navbar.html.jinja" %}
     <h1>Beep!</h1>
 
-  <form class="container" action=""/browse>
+  <form class="container" action="/browse">
     <div class="input-group mb-3">
       <input type="text" name="query" class="form-control" placeholder="Search..." aria-label="Search">
       <button class="btn btn-outline-secondary" type="submit">Search</button>
@@ -25,7 +25,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ item["name"] }}</h5>
             <p class="card-text">{{ item['price'] }}</p>
-            <a href="#" class="btn btn-primary">add to cart?</a>
+            <a href="/product/{{ item['id'] }}" class="btn btn-primary">add to cart?</a>
           </div>
       </div>
     </div>
