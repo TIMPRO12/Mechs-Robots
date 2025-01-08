@@ -19,7 +19,7 @@
             <p class="fs-5">{{product["description"]}}</p>
             <h4>${{product["price"]}}</h4>
             <br>
-            <form method="post">
+            <form method="post" action="/product/{{product['id']}}/cart">
               <div>
                 <label for="qty" class="form-label">Qty</label>
                 <input type="number" class="form-control" id="qty" min="1" max="5" value="1" name="qty">

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, flash, abort
 import pymysql
 from dynaconf import Dynaconf
 import flask_login
+import math
 
 
 app = Flask(__name__)
@@ -124,6 +125,8 @@ def add_to_cart(product_id):
         (`qty`, `Customer_id`, `Product_id`)
     VALUE
         ('{qty}', '{Customer_id}', '{product_id}')
+    ON DUPLICATE KEY UPDATE
+        `qty` = `qty` + {qty}
     """)
 
     cursor.close()
@@ -227,8 +230,42 @@ def cart():
 
     results = cursor.fetchall()
 
+    total = 0
+
+    for product in results:
+
+        qty = product["qty"]
+        price = product["price"]
+        item_total = qty * price 
+        total = item_total + total
+
+
+    
     cursor.close()
     conn.close()
 
 
     return render_template("cartpage.html.jinja", products=results)
+
+
+@app.route("/cart/<cart_id>/del", methods = ["POST"])
+@flask_login.login_required
+def delete(cart_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute(f"DELETE FROM `Cart` WHERE `id`={cart_id};")
+    cursor.close()
+    conn.close()
+    return redirect("/cart")
+
+
+@app.route("/cart/<cart_id>/upd", methods = ["POST"])
+@flask_login.login_required
+def upd(cart_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+    qty = request.form["qty"]
+    cursor.execute(f"UPDATE `Cart` SET `quantity`={qty} WHERE `id`={cart_id};")
+    cursor.close()
+    conn.close()
+    return redirect("/cart")
