@@ -234,10 +234,10 @@ def cart():
 
     for product in results:
 
-        qty = product["qty"]
-        price = product["price"]
-        item_total = qty * price 
-        total = item_total + total
+         qty = product["qty"]
+         price = product["price"]
+         item_total = qty * price 
+         total = item_total + total
 
 
     
@@ -245,7 +245,7 @@ def cart():
     conn.close()
 
 
-    return render_template("cartpage.html.jinja", products=results)
+    return render_template("cartpage.html.jinja", product=results)
 
 
 @app.route("/cart/<cart_id>/del", methods = ["POST"])
@@ -269,3 +269,23 @@ def upd(cart_id):
     cursor.close()
     conn.close()
     return redirect("/cart")
+
+
+@app.route("/cart/sale/")
+@flask_login.login_required
+def purch():
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+
+
+
+@app.route("/review/")
+@flask_login.login_required
+def review():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+
+
+
