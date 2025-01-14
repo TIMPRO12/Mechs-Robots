@@ -18,21 +18,20 @@
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-outline-info" type="submit">Search</button>
       </form>
       {% if current_user.is_authenticated %}
       <div class="dropdown ps-2">
-        <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-           Hello {{current_user.username}}
+        <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Hello {{current_user.first_name}}
         </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><a class="dropdown-item" href="\logout">Sign Out</a></li>
         </ul>
         </div>
       {%else%}
         <div class="ps-2">
-          <a class="btn btn-outline-warning" href="/signin ">Sign-In</a>
+          <a class="btn btn-info" href="/signin ">Sign-In</a>
         </div>
       {%endif%}
     </div>

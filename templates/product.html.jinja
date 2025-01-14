@@ -17,7 +17,7 @@
             <h3 class="">{{product["name"]}}</h3>
             <br>
             <p class="fs-5">{{product["description"]}}</p>
-            <h4>${{product["price"]}}</h4>
+            <h4>${{  "%.2f" | format(product["price"])}}</h4>
             <br>
             <form method="post" action="/product/{{product['id']}}/cart">
               <div>
@@ -25,15 +25,17 @@
                 <input type="number" class="form-control" id="qty" min="1" max="5" value="1" name="qty">
               </div>
             </form>
-            <button type="button" class="fs-4 btn btn-warning w-75"> Add to Cart </button>
+            <button type="button" class="fs-4 btn btn-info w-75"> Add to Cart </button>
         </div>    
     </div>
   </div>
   <div>
     <form>
-      
-    
-    
+      <label for="rate">Rate Product</label>
+      <input type="number" class="form-control" id="rate" min="1" value="1" max="5" name="rate">
+      <label for="content"> Want to leave a review? </label>
+      <input type="text" id="content" name="content"> 
+      <button type="submit" class="btn btn-info"> Turn in </button>
     </form>
   </div>
 
