@@ -31,20 +31,41 @@
                 <td>{{item["name"]}}</td>
                 <td>{{  "%.2f"  | format(item["price"]) }}
                 <td>{{item["quantity"]}}</td>
-                <td><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4.5 14.5v-3a1 1 0 011-1h4a1 1 0 011 1v3m3 0h-12a1 1 0 01-1-1v-12a1 1 0 011-1h8.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V13.5a1 1 0 01-1 1z" stroke="currentColor"></path></svg></td>
-                <td><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4.5 3V1.5a1 1 0 011-1h4a1 1 0 011 1V3M0 3.5h15m-13.5 0v10a1 1 0 001 1h10a1 1 0 001-1v-10M7.5 7v5m-3-3v3m6-3v3" stroke="currentColor"></path></svg></td>
+                <td><form method="post" action="/cart/{{item['id']}}/del" class="d-inline"><button type="submit" class="btn btn-danger"><svg viewBox="0 0 15 15" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" width="15" height="15"> <path
+                                        d="M4.5 3V1.5a1 1 0 011-1h4a1 1 0 011 1V3M0 3.5h15m-13.5 0v10a1 1 0 001 1h10a1 1 0 001-1v-10M7.5 7v5m-3-3v3m6-3v3"
+                                        stroke="currentColor"></path></svg></button>
+                </td>
+                <td><button form="updForm-{{item['id']}}" class="btn btn-primary" type="submit"><svg
+                                viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15"
+                                height="15">
+                                <path
+                                    d="M4.5 14.5v-3a1 1 0 011-1h4a1 1 0 011 1v3m3 0h-12a1 1 0 01-1-1v-12a1 1 0 011-1h8.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V13.5a1 1 0 01-1 1z"
+                                    stroke="currentColor"></path>
+                            </svg></button></td>
+   
+            
             </tr>
             {% endfor %}
         </tbody>
+        
     </table>
+
+<div>
+    <div class="row justify-content-end">
+        <h3 class="col-4">Total: ${{ "%.2f" | format(total) }}</h3>
+        <form class="justify-content-center col-5" action="/checkout">
+            <button type="submit" class="btn btn-info">Checkout</button>
+        </form>
+    </div>
+</div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-<P>
-Total Price =
-</P>
 </body>
 
 </html>

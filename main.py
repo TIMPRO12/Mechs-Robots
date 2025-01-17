@@ -121,7 +121,7 @@ def add_to_cart(product_id):
     Customer_id = flask_login.current_user.id
 
     cursor.execute(f"""
-    INSERT INTO `Customer`
+    INSERT INTO `Cart`
         (`qty`, `Customer_id`, `Product_id`)
     VALUE
         ('{qty}', '{Customer_id}', '{product_id}')
@@ -131,6 +131,7 @@ def add_to_cart(product_id):
 
     cursor.close()
     conn.close()
+    return redirect ("/cart")
 
 @app.route("/signup", methods=["POST", "GET"])
 def  signup():
@@ -234,10 +235,10 @@ def cart():
 
     for product in results:
 
-         qty = product["qty"]
-         price = product["price"]
-         item_total = qty * price 
-         total = item_total + total
+        qty = product["qty"]
+        price = product["price"]
+        item_total = qty * price 
+        total = item_total + total
 
 
     
@@ -245,7 +246,7 @@ def cart():
     conn.close()
 
 
-    return render_template("cartpage.html.jinja", product=results)
+    return render_template("cartpage.html.jinja", product=results , total=total)
 
 
 @app.route("/cart/<cart_id>/del", methods = ["POST"])
@@ -278,14 +279,32 @@ def purch():
     cursor = conn.cursor()
     
 
-
-
 @app.route("/review/")
 @flask_login.login_required
 def review():
+
     conn = connect_db()
     cursor = conn.cursor()
 
+@app.route("/checkout")
+@flask_login.login_required
+def checkout():
+    customer_id = flask_login.current_user.id
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute(f"""SELECT `name`,`price`,`quantity`,`image`,`product_id`,`Cart`.`id` 
+    FROM `Cart` JOIN `Product` ON `product_id` = `Product`.`id`
+    WHERE `customer_id` = {customer_id};""")
+    result = cursor.fetchall()
+    total = 0
+    tax = 0.08875
+    for product in result:
+        quantity = product["quantity"]
+        price = product["price"]
+        item_total = price * quantity
+        total = item_total + total
 
+    tax_total = total * tax
+    overall_total = total + tax_total
 
 
